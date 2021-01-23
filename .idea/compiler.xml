@@ -11,11 +11,11 @@
         <module name="leyou-gateway" />
         <module name="leyou-item-service" />
         <module name="leyou-registry" />
-        <module name="123" />
         <module name="leyou-common" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="123" target="1.8" />
       <module name="345" target="1.8" />
     </bytecodeTargetLevel>
   </component>
