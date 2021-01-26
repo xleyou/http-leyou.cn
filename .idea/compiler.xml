@@ -9,8 +9,8 @@
         <module name="345" />
         <module name="leyou-item-interface" />
         <module name="leyou-gateway" />
-        <module name="leyou-item-service" />
         <module name="leyou-registry" />
+        <module name="leyou-item-service" />
         <module name="leyou-common" />
       </profile>
     </annotationProcessing>
