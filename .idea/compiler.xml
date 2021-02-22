@@ -9,10 +9,10 @@
         <module name="345" />
         <module name="leyou-item-interface" />
         <module name="leyou-gateway" />
-        <module name="leyou-upload" />
+        <module name="leyou-common" />
         <module name="leyou-registry" />
         <module name="leyou-item-service" />
-        <module name="leyou-common" />
+        <module name="leyou-upload" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

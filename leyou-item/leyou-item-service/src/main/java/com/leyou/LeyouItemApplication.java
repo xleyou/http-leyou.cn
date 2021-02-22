@@ -11,6 +11,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 public class LeyouItemApplication {
 
     public static void main(String[] args) {
+        double i=0.1;
         SpringApplication.run(LeyouItemApplication.class);
     }
 }

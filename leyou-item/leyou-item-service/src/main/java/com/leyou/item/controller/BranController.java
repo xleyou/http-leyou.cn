@@ -8,12 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Response;
 import java.util.List;
 
 @Controller
@@ -22,6 +18,9 @@ public class BranController {
 
     @Autowired
     private BrandService brandService;
+
+
+
 
     /**
      * 根据查询条件分页并排序查询品牌信息
@@ -55,7 +54,21 @@ public class BranController {
         this.brandService.saveBrand(brand,cids);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
-
     //修改品牌信息
+    @PutMapping
+    public ResponseEntity<Void> updBrand(Brand brand, @RequestParam(value="cids") List<Long> cids){
+
+        this.brandService.updateBrand(brand,cids);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    //删除品牌信息
+    @GetMapping("bid/{bid}")
+    public ResponseEntity<Void> deleteBrand(@PathVariable("bid")Long bid){
+        this.brandService.deleteBrand(bid);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+
 
 }

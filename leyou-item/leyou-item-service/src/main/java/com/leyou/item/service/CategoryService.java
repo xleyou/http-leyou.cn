@@ -22,4 +22,9 @@ public class CategoryService {
         category.setParentId(pid);
         return this.categoryMapper.select(category);
     }
+
+    //根据id查询分类
+    public List<Category> queryByBrandId(Long bid){
+        return this.categoryMapper.queryByBrandId(bid);
+    }
 }
