@@ -8,6 +8,7 @@ import com.leyou.item.pojo.Brand;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import java.text.BreakIterator;
@@ -52,5 +53,21 @@ public class BrandService {
         PageInfo<Brand> pageInfo=new PageInfo<>(brands);
 
         return new PageResult<>(pageInfo.getTotal(),pageInfo.getList());
+    }
+
+    public List<Brand> queryBrandsByCid(Long cid) {
+
+        return this.brandMapper.selectBrandByCid(cid);
+    }
+
+    /**
+     * 根据bid的集合查询品牌信息
+     */
+   /* public List<Brand> queryBrandsByIds(List<Long> ids) {
+        return brandMapper.selectByIdList(ids);
+    }*/
+
+    public Brand queryBrandById(Long id) {
+        return this.brandMapper.selectByPrimaryKey(id);
     }
 }

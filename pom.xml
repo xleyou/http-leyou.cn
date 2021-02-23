@@ -15,6 +15,15 @@
         <module>leyou-gateway</module>
         <module>leyou-item</module>
         <module>leyou-common</module>
+        <module>leyou-search</module>
+        <module>leyou-goods-web</module>
+        <module>leyou-sms</module>
+        <module>leyou-auth</module>
+        <module>leyou-auth-common</module>
+        <module>leyou-auth-service</module>
+        <module>leyou-auth/leyou-auth-common</module>
+        <module>leyou-auth-common</module>
+        <module>leyou-cart</module>
     </modules>
 
     <name>leyou</name>
