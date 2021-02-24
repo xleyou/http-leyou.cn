@@ -1,5 +1,6 @@
 package com.leyou.item.pojo;
 
+
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -60,4 +61,7 @@ public class SpuDetail {
     public void setAfterService(String afterService) {
         this.afterService = afterService;
     }
+}
+
+    // 省略getter和setter
 }

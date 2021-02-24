@@ -89,3 +89,7 @@ public class SpecParam {
         this.segments = segments;
     }
 }
+
+
+    // getter和setter ...
+}

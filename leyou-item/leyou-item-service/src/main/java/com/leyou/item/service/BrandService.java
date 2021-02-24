@@ -70,4 +70,33 @@ public class BrandService {
     public Brand queryBrandById(Long id) {
         return this.brandMapper.selectByPrimaryKey(id);
     }
+    /**
+     * 修改品牌
+     * @param brand
+     * @param cids
+     */
+    public void updateBrand(Brand brand,List<Long> cids){
+        //先新增brand
+        this.brandMapper.updateByPrimaryKeySelective(brand);
+//        //在新增中间表
+//        cids.forEach(cid->{
+//            this.brandMapper. updateCategoryAndBrand(cid,brand.getId());
+//        });
+    }
+    /**
+     * 删除品牌
+     */
+    public void deleteBrand(Long bid){
+        Brand brand=new Brand();
+        brand.setId(bid);
+        this.brandMapper.delete(brand);
+    }
+    /**
+     * 根据分类id查询品牌列表
+     * @param cid
+     * @return
+     */
+    public List<Brand> queryBrandsByCid(Long cid) {
+        return this.brandMapper.selectBrandsByCid(cid);
+    }
 }

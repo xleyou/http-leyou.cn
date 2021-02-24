@@ -3,11 +3,13 @@ package com.leyou.item.controller;
 import com.leyou.common.pojo.PageResult;
 import com.leyou.item.bo.SpuBo;
 import com.leyou.item.pojo.Sku;
-import com.leyou.item.pojo.Spu;
 import com.leyou.item.pojo.SpuDetail;
 import com.leyou.item.service.GoodsService;
+import com.netflix.discovery.converters.Auto;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -21,52 +23,104 @@ public class GoodsController {
     @Autowired
     private GoodsService goodsService;
 
-    @GetMapping("/goods/spu/page")
-    public ResponseEntity<PageResult<SpuBo>> querySpuBoByPage(
-            @RequestParam(value = "key", required = false)String key,
-            @RequestParam(value = "saleable", required = false)Boolean saleable,
-            @RequestParam(value = "page", defaultValue = "1")Integer page,
-            @RequestParam(value = "rows", defaultValue = "5")Integer rows
+    /**
+     * 根据条件查询分页
+     * @param key
+     * @param saleable
+     * @param page
+     * @param rows
+     * @return
+     */
+    @RequestMapping("spu/page")
+    public ResponseEntity<PageResult<SpuBo>> querySpuByPage(
+            @RequestParam(value="key",required = false) String key,
+            @RequestParam(value = "saleable",required = false) Boolean saleable,
+            @RequestParam(value="page",defaultValue = "1") Integer page,
+            @RequestParam(value="rows",defaultValue ="5")Integer rows
     ){
-        PageResult<SpuBo> pageResult = this.goodsService.querySpuBoByPage(key, saleable, page, rows);
-        if(CollectionUtils.isEmpty(pageResult.getItems())){
+        PageResult<SpuBo> result=this.goodsService.querySpuByPage(key,saleable,page,rows);
+        if(result==null || CollectionUtils.isEmpty(result.getItems())){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(pageResult);
+        return ResponseEntity.ok(result);
     }
 
+    /**
+     * 新增商品
+     * @param spuBo
+     * @return
+     */
+    @PostMapping("goods")
+    public ResponseEntity<Void> saveGoods(@RequestBody SpuBo spuBo){
+        this.goodsService.saveGoods(spuBo);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+    /**
+     * 更新商品
+     * @param spuBo
+     * @return
+     */
+    @PutMapping("goods")
+    public ResponseEntity<Void> updateGoods(@RequestBody SpuBo spuBo){
+        this.goodsService.updateGoods(spuBo);
+        return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * 根据spuid查询spudetail
+     * @param spuId
+     * @return
+     */
     @GetMapping("spu/detail/{spuId}")
-    public ResponseEntity<SpuDetail> querySpuDetailBySpuId(@PathVariable("spuId")Long spuId){
-        SpuDetail spuDetail = this.goodsService.querySpuDetailBySpuId(spuId);
-        if (spuDetail == null) {
+    public ResponseEntity<SpuDetail> querySpuDetailBySpuId(@PathVariable("spuId") Long spuId){
+        SpuDetail spuDetail= this.goodsService.querySpuDateilBYSpuId(spuId);
+        if (spuDetail==null){
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(spuDetail);
     }
-    @GetMapping("/goods/sku/list/{id}")
-    public ResponseEntity<List<Sku>> querySkuBySpuId(@PathVariable("id") Long id){
-        List<Sku> list = this.goodsService.querySkuBySpuId(id);
-        if (list == null || list.size() < 1){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }else {
-            return ResponseEntity.ok(list);
+
+    /**
+     * 根据spuid查询sku
+     * @param id
+     * @return
+     */
+    @GetMapping("sku/list")
+    public ResponseEntity<List<Sku>> querySkuBySpuId(@RequestParam("id")Long id){
+        List<Sku> skus=this.goodsService.querySkuBySpuId(id);
+        if(CollectionUtils.isEmpty(skus)){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(skus);
+    }
+
+    /**
+     * 通过spu_id删除商品goods
+     *
+     * @param spuId
+     * @return
+     */
+    @DeleteMapping("/goods/{spuId}")
+    public ResponseEntity<Void> deleteGoods(@PathVariable("spuId") Long spuId) {
+        try {
+            this.goodsService.deleteGoods(spuId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/goods/{id}")
-    public ResponseEntity<Spu> querySpuById(@PathVariable("id") Long id){
-        Spu spu = this.goodsService.querySpuById(id);
-        if(spu == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return ResponseEntity.ok(spu);
+    /**
+     * 通过spu_id修改商品上下架状态
+     *
+     * @param spuId
+     * @return
+     */
+    @PutMapping("/goods/saleable/{spuId}")
+    public ResponseEntity<Void> changeSaleable(@PathVariable("spuId") Long spuId) {
+        this.goodsService.changeSaleable(spuId);
+        return ResponseEntity.ok().build();
     }
-    @GetMapping("/goods/sku/{id}")
-    public ResponseEntity<Sku> querySkuById(@PathVariable("id")Long id){
-        Sku sku = this.goodsService.querySkuById(id);
-        if (sku == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return ResponseEntity.ok(sku);
-    }
+
 }

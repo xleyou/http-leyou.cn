@@ -1,5 +1,6 @@
 package com.leyou.auth.service;
 
+import com.leyou.auth.client.UserClient;
 import com.leyou.auth.config.JwtProperties;
 import com.leyou.common.utils.CookieUtils;
 import com.leyou.common.utils.JwtUtils;
@@ -23,7 +24,7 @@ public class AuthService {
     @Autowired
     private JwtProperties properties;
 
-    public String accredit(String username, String password) {
+   /* public String accredit(String username, String password) {
 
         try {
             // 调用微服务，执行查询
@@ -42,5 +43,5 @@ public class AuthService {
             e.printStackTrace();
         }
         return null;
-    }
+    }*/
 }

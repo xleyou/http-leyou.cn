@@ -40,6 +40,14 @@ public class SpuBo extends Spu {
     public void setBname(String bname) {
         this.bname = bname;
     }
+import java.util.List;
+
+public class SpuBo extends Spu {
+
+    private String cname;
+    private String bname;
+    private SpuDetail spuDetail;// 商品详情
+    private List<Sku> skus;// sku列表
 
     public SpuDetail getSpuDetail() {
         return spuDetail;
@@ -63,4 +71,19 @@ public class SpuBo extends Spu {
     @Transient
     private List<Sku> skus;
 
+    public String getCname() {
+        return cname;
+    }
+
+    public void setCname(String cname) {
+        this.cname = cname;
+    }
+
+    public String getBname() {
+        return bname;
+    }
+
+    public void setBname(String bname) {
+        this.bname = bname;
+    }
 }
