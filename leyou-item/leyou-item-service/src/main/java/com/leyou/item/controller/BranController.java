@@ -20,10 +20,9 @@ public class BranController {
     private BrandService brandService;
 
 
-
-
     /**
      * 根据查询条件分页并排序查询品牌信息
+     *
      * @param key
      * @param page
      * @param rows
@@ -33,15 +32,15 @@ public class BranController {
      */
     @GetMapping("page")
     public ResponseEntity<PageResult<Brand>> queryBrandsByPage(
-            @RequestParam(value="key",required = false) String key,
-            @RequestParam(value="page",defaultValue = "1") Integer page,
-            @RequestParam(value="rows",defaultValue = "5") Integer rows,
-            @RequestParam(value="sortBy",required = false) String sortBy,
-            @RequestParam(value="desc",required = false) Boolean desc
-    ){
+            @RequestParam(value = "key", required = false) String key,
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "5") Integer rows,
+            @RequestParam(value = "sortBy", required = false) String sortBy,
+            @RequestParam(value = "desc", required = false) Boolean desc
+    ) {
 
-        PageResult<Brand> result= this.brandService.queryBrandsByPage(key,page,rows,sortBy,desc);
-        if(CollectionUtils.isEmpty(result.getItems())){
+        PageResult<Brand> result = this.brandService.queryBrandsByPage(key, page, rows, sortBy, desc);
+        if (CollectionUtils.isEmpty(result.getItems())) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(result);
@@ -49,26 +48,41 @@ public class BranController {
 
     //新增品牌信息
     @PostMapping
-    public ResponseEntity<Void> saveBrand(Brand brand, @RequestParam(value="cids") List<Long> cids){
+    public ResponseEntity<Void> saveBrand(Brand brand, @RequestParam(value = "cids") List<Long> cids) {
         System.out.println(brand.getName());
-        this.brandService.saveBrand(brand,cids);
+        this.brandService.saveBrand(brand, cids);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
     //修改品牌信息
     @PutMapping
-    public ResponseEntity<Void> updBrand(Brand brand, @RequestParam(value="cids") List<Long> cids){
+    public ResponseEntity<Void> updBrand(Brand brand, @RequestParam(value = "cids") List<Long> cids) {
 
-        this.brandService.updateBrand(brand,cids);
+        this.brandService.updateBrand(brand, cids);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     //删除品牌信息
     @GetMapping("bid/{bid}")
-    public ResponseEntity<Void> deleteBrand(@PathVariable("bid")Long bid){
+    public ResponseEntity<Void> deleteBrand(@PathVariable("bid") Long bid) {
         this.brandService.deleteBrand(bid);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    /**
+     * 根据分类id查询品牌列表
+     * @param cid
+     * @return
+     */
+    @GetMapping("cid/{cid}")
+    public ResponseEntity<List<Brand>> queryBrandsByCid(@PathVariable Long cid) {
+        List<Brand> brands=this.brandService.queryBrandsByCid(cid);
+        if (CollectionUtils.isEmpty(brands)) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(brands);
+
+    }
 
 
 }

@@ -7,17 +7,23 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="345" />
-        <module name="leyou-item-interface" />
+        <module name="leyou-user-service" />
+        <module name="ly-user-service" />
+        <module name="leyou-user-interface" />
         <module name="leyou-gateway" />
+        <module name="leyou-upload" />
         <module name="leyou-common" />
         <module name="leyou-registry" />
         <module name="leyou-item-service" />
-        <module name="leyou-upload" />
+        <module name="leyou-item-interface" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="123" target="1.8" />
       <module name="345" target="1.8" />
+      <module name="ly-user" target="1.5" />
+      <module name="ly-user-interface" target="1.5" />
+      <module name="ly-user-service" target="1.5" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -32,6 +38,9 @@
       <module name="leyou-item-service" options="-parameters" />
       <module name="leyou-registry" options="-parameters" />
       <module name="leyou-upload" options="-parameters" />
+      <module name="leyou-user" options="-parameters" />
+      <module name="leyou-user-interface" options="-parameters" />
+      <module name="leyou-user-service" options="-parameters" />
     </option>
   </component>
 </project>

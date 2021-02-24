@@ -3,6 +3,7 @@ package com.leyou.item.controller;
 import com.leyou.item.pojo.SpecGroup;
 import com.leyou.item.pojo.SpecParam;
 import com.leyou.item.service.SpecificationService;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,8 +49,13 @@ public class SpecificationController {
      * @return
      */
     @GetMapping("params")
-    public ResponseEntity<List<SpecParam>> queryParams(@RequestParam("gid")Long gid){
-        List<SpecParam> params=this.specificationService.queryParams(gid);
+    public ResponseEntity<List<SpecParam>> queryParams(
+            @RequestParam(value="gid" ,required = false)Long gid,
+            @RequestParam(value="cid" , required = false)Long cid,
+            @RequestParam(value="generic" , required = false) Boolean generic,
+            @RequestParam(value="searching" , required = false)Boolean searching
+            ){
+        List<SpecParam> params=this.specificationService.queryParams(gid,cid,generic,searching);
         if (CollectionUtils.isEmpty(params)){
             return ResponseEntity.notFound().build();
         }
@@ -122,4 +128,7 @@ public class SpecificationController {
         this.specificationService.deleteParam(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
+
 }

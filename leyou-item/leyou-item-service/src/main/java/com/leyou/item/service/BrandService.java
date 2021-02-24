@@ -90,4 +90,12 @@ public class BrandService {
         brand.setId(bid);
         this.brandMapper.delete(brand);
     }
+    /**
+     * 根据分类id查询品牌列表
+     * @param cid
+     * @return
+     */
+    public List<Brand> queryBrandsByCid(Long cid) {
+        return this.brandMapper.selectBrandsByCid(cid);
+    }
 }
