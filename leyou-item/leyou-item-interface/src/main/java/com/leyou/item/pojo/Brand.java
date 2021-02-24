@@ -14,6 +14,7 @@ public class Brand {
     private String image;// 品牌图片    
     private Character letter;
 
+
 // getter setter 略
 
     public Long getId() {
